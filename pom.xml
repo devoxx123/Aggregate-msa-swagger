@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>io.msa.services</groupId>
+	<artifactId>aggregate-msa-microservices</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>microservices-discovery-service</module>
+		<module>microservices-config-service</module>
+		<module>microservices-employee-service</module>
+		<module>microservices-department-service</module>
+		<module>microservices-organization-service</module>
+		<module>microservices-gateway-service</module>
+		<module>microservices-zipkin-service</module>
+	</modules>
+	
+</project>
