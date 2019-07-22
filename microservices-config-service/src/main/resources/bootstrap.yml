@@ -1,14 +1,27 @@
 server:
   port: 8888
   
+  #File Based Configuration
+
+#spring:
+#    profiles:
+#        active: native
+#    cloud:
+#        config:
+#            server:
+#                native:
+#                    searchLocations: classpath:config/
+                    
+#GitHub as resource repository                    
 spring:
-    profiles:
-        active: native
-    cloud:
-        config:
-            server:
-                native:
-                    searchLocations: classpath:config/
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitlab.com/12app/aggregate-swagger.git
+          username: "mhari.tech"    
+          password: "09g81a0505"
+
                     
 management:
   endpoints:
