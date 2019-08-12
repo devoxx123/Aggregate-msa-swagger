@@ -1,54 +1,46 @@
+Spring Cloud Config Server
+---------------------------
+1.Spring Cloud Config provides server-side and client-side support for externalized configuration in a distributed system. 
 
-# Spring Cloud Event Sourcing Example
+2.The Config Server you have a central place to manage external properties for applications across all environments. 
 
-This reference application is a Spring Cloud example of using event sourcing in microservices. The project is intended to demonstrate end-to-end best practices for building a _Netflix-like_ microservice architecture using Spring Cloud.
+3.The concepts on both client and server map identically to the Spring Environment and PropertySource abstractions, so they fit very well with Spring applications but can be used with any application running in any language.
 
-Tutorial provided here: http://www.kennybastani.com/2016/04/event-sourcing-microservices-spring-cloud.html
+4.As an application moves through the deployment pipeline from dev to test and into production, you can manage the configuration between those environments and be certain that applications have everything they need to run when they migrate. 
 
-* Spring Cloud OAuth2
-  * Authorization Server
-  * Resource Server
-* Edge Service
-  * API gateway with OAuth2 protected resources
-  * OAuth2 SSO
-* Event-driven Messaging
-  * Event sourcing
+5.The default implementation of the server storage backend uses git, so it easily supports labelled versions of configuration environments as well as being accessible to a wide range of tooling for managing the content.
 
-## Architecture Diagram
+6.It is easy to add alternative implementations and plug them in with Spring configuration.
 
-![Online Store Architecture Diagram](http://i.imgur.com/zqzmAzi.png)
+Features
 
-## Online Store Domain
+Spring Cloud Config Server
 
-This reference application is based on common design patterns for building an ecommerce application. The application includes the following microservices.
+Spring Cloud Config Server offers the following benefits:
 
-* Discovery Service
-* Edge Service
-* User Service
-* Catalog Service
-* Account Service
-* Order Service
-* Inventory Service
-* Online Store Web
-* Shopping Cart Service
+HTTP resource-based API for external configuration (name-value pairs or equivalent YAML content)
 
-## Usage
+Encrypt and decrypt property values (symmetric or asymmetric)
 
-Microservice architectures commonly use multiple databases. The resources of the business domain are distributed across the microservice architecture, with each service having its own exclusive database. Each type of database for a microservice is commonly chosen by a development team based on its advantages when solving a specific problem.
+Embeddable easily in a Spring Boot application using @EnableConfigServer
 
-This reference application uses the following mixture of databases.
+Spring Cloud Config Client
+Specifically for Spring applications, Spring Cloud Config Client lets you:
 
-* MySQL - RDBMS
-* Neo4j - GraphDB
-* MongoDB - Document Store
-* Redis - Key/value Store
+Bind to the Config Server and initialize Spring Environment with remote property sources.
 
-### Integration Testing
+Encrypt and decrypt property values (symmetric or asymmetric).
 
-If you would like to use Docker for integration testing, a `docker-compose.yml` file has been provided in the root directory. To build all the images, first make sure that you have Docker installed and available in your command line tool. With Docker and Docker Compose installed, execute the provided `run.sh` script. This script will build each container and start each of the services and database dependencies. When all the services have started up. Verify that the services are registered with Eureka at `http://$DOCKER_IP:8761`.
+@RefreshScope for Spring @Beans that want to be re-initialized when configuration changes.
 
-If everything has loaded correctly, navigate to the online store at `http://DOCKER_IP:8787/`. Click `Login`. You'll be navigated to the authorization server's gateway at `http://DOCKER_IP:8181/uaa/login`. The username is `user` and the password is `password`. You'll be authenticated and asked to approve token grant to the online web store. After accepting the grant, you'll be redirected to the online store application where you'll be able to access protected resources from the edge service.
+Use management endpoints:
 
-## License
+/env for updating Environment and rebinding @ConfigurationProperties and log levels.
 
-This project is licensed under Apache License 2.0.
+/refresh for refreshing the @RefreshScope beans.
+
+/restart for restarting the Spring context (disabled by default).
+
+/pause and /resume for calling the Lifecycle methods (stop() and start() on the ApplicationContext).
+
+Bootstrap application context: a parent context for the main application that can be trained to do anything (by default, it binds to the Config Server and decrypts property values).
